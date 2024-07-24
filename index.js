@@ -155,6 +155,9 @@ async function checkIsClaimable() {
             if (isClaimable) {
                 document.getElementById('claimButton').disabled = false;
             }
+            else {
+                document.getElementById('claimButton').disabled = true;
+            }
             document.getElementById('isClaimable').innerHTML = isClaimable ? 'You can claim your winnings' : 'You cannot claim';
             
         } catch (error) {
