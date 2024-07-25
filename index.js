@@ -5,6 +5,8 @@ const connectButton = document.getElementById('connectButton');
 const teamAbutton = document.getElementById('teamAButton');
 const teamBbutton = document.getElementById('teamBButton');
 const claimButton = document.getElementById('claimButton');
+const popupPanel = document.getElementById('popup-panel');
+const popup = document.getElementById('popup');
 connectButton.onclick = connect;
 teamAbutton.onclick = betTeamA;
 teamBbutton.onclick = betTeamB;
@@ -29,22 +31,31 @@ async function getTeams(matchID) {
             return null;
         }
     }
-    
+
 }
 
 async function connect() {
     if (typeof window.ethereum !== 'undefined') {
         try {
-            await window.ethereum.request({method: "eth_requestAccounts"});
+            await window.ethereum.request({ method: "eth_requestAccounts" });
         } catch (error) {
             console.log(error);
+        } finally {
+            connectButton.innerHTML = 'Conectado';
+            const accounts = await ethereum.request({ method: 'eth_accounts' });
+            console.log(accounts);
+            popup.classList.add("deslizar");
+            popupPanel.classList.add("clarear");
+            setTimeout(() => {
+                popup.classList.remove("deslizar");
+                popup.style.marginTop = "100%"
+                popupPanel.classList.remove("clarear");
+                popupPanel.style.backgroundColor = "rgba(0, 0, 0, 0)"
+                popupPanel.style.pointerEvents = "none";
+            }, 1350);
         }
-        connectButton.innerHTML = 'Connected';
-        const accounts = await ethereum.request({method: 'eth_accounts'});
-        console.log(accounts);
     } else {
-        connectButton.innerHTML = 
-        'Pleses install MetaMask';
+        alert("Por favor, instale o MetaMask");
     }
 }
 
@@ -66,9 +77,10 @@ async function claim() {
         const signer = provider.getSigner();
         const contract = new ethers.Contract(contractAddress, abi, signer);
         const transactionResponse = await contract.claimWinnings(matchId);
-        
     }
 }
+
+bet
 
 async function bet(teamBet) {
     const ethAmount = document.getElementById('ethAmount').value;
@@ -86,9 +98,9 @@ async function bet(teamBet) {
         } catch (error) {
             console.log(error);
         }
-        
+
         //const transactionResponse = await contract.claimWinnings(1)
-        
+
     }
 }
 
@@ -105,7 +117,7 @@ function listenForTransactionMine(transactionResponse, provider) {
             checkIsClaimable();
         });
     })
-    
+
 }
 
 async function getAmountBetted() {
@@ -114,14 +126,14 @@ async function getAmountBetted() {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const contract = new ethers.Contract(contractAddress, abi, provider);
         try {
-            const accounts = await ethereum.request({method: 'eth_accounts'});
+            const accounts = await ethereum.request({ method: 'eth_accounts' });
             const amountBetted = await contract.getBet(matchId, accounts[0]);
             console.log(amountBetted);
             const match = await getTeams(matchId);
             const team = amountBetted.team == 1 ? match.teamA : amountBetted.team == 2 ? match.teamB : 'None';
 
-            document.getElementById('amountBetted').innerHTML = `Your bet ${ethers.utils.formatEther(amountBetted.amount.toString())} DSK on ${team}`;
-            
+            document.getElementById('amountBetted').innerHTML = `Você apostou ${ethers.utils.formatEther(amountBetted.amount.toString())} DSK no ${team}`;
+
         } catch (error) {
             console.log(error);
         }
@@ -135,7 +147,7 @@ async function checkIsClosed() {
         const contract = new ethers.Contract(contractAddress, abi, provider);
         try {
             const isClosed = await contract.isClosed(matchId);
-            document.getElementById('isClosed').innerHTML = isClosed ? 'Bet is Closed for bets' : 'Bet is Open for bets';
+            document.getElementById('isClosed').innerHTML = isClosed ? 'A bet está fechada' : 'A bet está aberta!';
             document.getElementById('ethAmount').disabled = isClosed;
         } catch (error) {
             console.log(error);
@@ -150,7 +162,7 @@ async function checkIsClaimable() {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const contract = new ethers.Contract(contractAddress, abi, provider);
         try {
-            const accounts = await ethereum.request({method: 'eth_accounts'});
+            const accounts = await ethereum.request({ method: 'eth_accounts' });
             const isClaimable = await contract.isClaimable(matchId, accounts[0]);
             if (isClaimable) {
                 document.getElementById('claimButton').disabled = false;
@@ -158,8 +170,8 @@ async function checkIsClaimable() {
             else {
                 document.getElementById('claimButton').disabled = true;
             }
-            document.getElementById('isClaimable').innerHTML = isClaimable ? 'You can claim your winnings' : 'You cannot claim';
-            
+            document.getElementById('isClaimable').innerHTML = isClaimable ? 'Você pode receber seus ganhos!' : 'Você não tem o que receber';
+
         } catch (error) {
             console.log(error);
         }
@@ -180,16 +192,16 @@ async function getOdds() {
             const oddB = ethers.utils.formatEther(odds[1].toString());
             const total = parseFloat(oddA) + parseFloat(oddB);
             if (oddA == 0) {
-                document.getElementById('oddsA').innerHTML = `Odds: 0`;
+                document.getElementById('oddsA').innerHTML = `Chances: 0`;
             } else {
-                document.getElementById('oddsA').innerHTML = `Odds: ${total / parseFloat(oddA)}`;
+                document.getElementById('oddsA').innerHTML = `Chances: ${total / parseFloat(oddA)}`;
             }
             if (oddB == 0) {
-                document.getElementById('oddsB').innerHTML = `Odds: 0`;
+                document.getElementById('oddsB').innerHTML = `Chances: 0`;
             } else {
-                document.getElementById('oddsB').innerHTML = `Odds: ${total / parseFloat(oddB)}`;
+                document.getElementById('oddsB').innerHTML = `Chances: ${total / parseFloat(oddB)}`;
             }
-            
+
 
         } catch (error) {
             console.log(error);
@@ -200,7 +212,7 @@ async function getOdds() {
 document.addEventListener('DOMContentLoaded', (event) => {
     listenToEvents();
     const matchInput = document.getElementById('matchId');
-    
+
     matchInput.addEventListener('input', (event) => {
         const matchID = event.target.value;
         if (matchID) {

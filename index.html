@@ -1,45 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Disko Bet</title>
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css">
     <script src="./index.js" type="module"></script>
-    </script>
-    <button id="connectButton">Connect</button>
-    
-    <div>
-        <button id="claimButton" disabled>Claim Rewards</button>
-        <label for="claim" id="isClaimable">You cannot claim</label>
-    </div>
-    
-    <div>
-        <!-- form -->
-        <label for="match">Match ID</label>
-        <input id="matchId" placeholder="1"/>
-        <label for="closed" id="isClosed">Bet is Closed for bets</label>
-        <!-- form -->
-    </div>
-    
-    <div id="match">
-        <!-- form -->
-        <label for="bet">DSK Amount</label>
-        <input id="ethAmount" placeholder="0.1"/>
-        <button id="teamAButton">Team A</button>
-        <button id="teamBButton">Team B</button>
-        <label for="amountBett" id="amountBetted">Your bet: 0 DSK</label>
-        <!-- form -->
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&amp;display=swap">
+</head>
+
+<body>
+    <div class="popup-panel" id="popup-panel">
+        <div class="popup" id="popup">
+            <div style="margin: auto;">
+                <p> Conecte-se para poder jogar! </p>
+                <button id="connectButton" style="margin-top: 15px;">Conectar</button>
+            </div>
+        </div>
     </div>
 
-    <div>
-        <label for="nteamA" id="nameteamA">Team A</label>
-        <label for="oddsA" id="oddsA">Odds: 0</label>
+    <div class="pos-conexao">
+        <div class="title">
+            <div style="width: 400px;">
+                <h1>
+                    DISKO BET
+                </h1>
+            </div>
+            <div style="text-align: right; width: 100%; display: flex; margin-right: 10px;">
+                <span style="width: 100%; align-self: flex-end;">
+                    O primeiro site de apostas com blockchain da América Latina!
+                </span>
+            </div>
+        </div>
+        <div class="contrast">
+            <div class="matchID" style="width: 50%;">
+                <!-- form -->
+                <label for="match">ID da bet:</label>
+                <input id="matchId" placeholder="1" />
+                <p for="closed" id="isClosed">A bet está fechada</p>
+                <!-- form -->
+            </div>
+
+            <div style="width: 50%;">
+                <div class="betOdds">
+                    <strong for="nteamA" id="nameteamA">Team A</strong>
+                    <label for="oddsA" id="oddsA">Odds: 0</label>
+                    <strong for="nteamB" id="nameteamB">Team B</strong>
+                    <label for="oddsB" id="oddsB">Odds: 0</label>
+                </div>
+
+                <div id="match" class="matchBet">
+                    <!-- form -->
+                    <label for="bet">DSK para apostar:</label>
+                    <input id="ethAmount" placeholder="0.1" />
+                    <div style="padding: 5px;">
+                        <button id="teamAButton">Team A</button>
+                        <button id="teamBButton">Team B</button>
+                    </div>
+                    <p for="amountBett" id="amountBetted">Sua bet: 0 DSK</p>
+                    <!-- form -->
+                </div>
+            </div>
+        </div>
+        <div class="rewardsButton">
+            <button id="claimButton" disabled>Receber ganhos</button>
+            <p for="claim" id="isClaimable">Você não tem o que receber</p>
+        </div>
     </div>
 
-    <div>
-        <label for="nteamB" id="nameteamB">Team B</label>
-        <label for="oddsB" id="oddsB">Odds: 0</label>
-    </div>
-    
 </body>
+
 </html>

@@ -1,0 +1,129 @@
+:root {
+    --background: #151515;
+    --contrast: #A91D3A;
+    --details: #C73659;
+    --letters: #EEEEEE;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 0;
+}
+
+html, body {
+    height: 100%;
+    background-color: var(--background);
+    color: var(--letters);
+    font-family: Nunito,sans-serif;
+    font-weight: 600;
+    font-size: x-large;
+    overflow: hidden;
+}
+
+div {
+    margin: 0px auto;
+    text-align: center;
+}
+
+div.popup-panel {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.4);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    z-index: 10;
+}
+
+.clarear {
+    animation: clarear 1s ease-out 0.4s;
+}
+
+@keyframes clarear {
+    0% {background-color: rgba(0, 0, 0, 0.4)}
+    50% {background-color: rgba(0, 0, 0, 0.2)}
+    100% {background-color: rgba(0, 0, 0, 0)}
+}
+
+div.popup {
+    text-align: center;
+    height: 30%;
+    width: 40%;
+    margin: 15% auto;
+    border: 2px solid white;
+    border-radius: 10px;
+    background-color: var(--background);
+    display: flex;
+}
+
+.deslizar {
+    animation: deslizar 1s ease-in 0.4s;
+}
+
+@keyframes deslizar {
+    0% { margin-top: 15% }
+    50% { margin-top: 60% }
+    100% { margin-top: 80% }
+}
+
+.pos-conexao {
+    display: flex;
+    background-color: var(--background);
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    border-bottom: 2px solid var(--details);
+}
+
+.contrast {
+    background-color: var(--contrast);
+    width: 100%;
+    margin: 15vh 0 0 0;
+    display: flex;
+    border-top: 2px solid var(--details);
+    border-bottom: 2px solid var(--details);
+    padding: 2vh;
+}
+
+.matchID {
+    margin: auto;
+}
+
+.rewardsButton {
+    display: inline;
+    text-align: center;
+    width: 100%;
+    margin-top: 10vh;
+}
+
+button {
+    width: 100%;
+    min-width: 140px;
+    max-width: fit-content;
+    height: 40px;
+    font-size: 80%;
+    font-weight:bold;
+    padding: 0 10px;
+
+    background-color: var(--background);
+    color: var(--contrast);
+    border: 2px solid var(--letters);
+    border-radius: 20px;
+
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: var(--letters);
+    color: var(--background);
+    border: 2px solid var(--details);
+}
+
